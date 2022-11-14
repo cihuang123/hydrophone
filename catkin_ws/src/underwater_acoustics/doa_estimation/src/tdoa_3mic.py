@@ -120,6 +120,7 @@ class TDOA(object):
                     self.waitForWindowFullStart = time.time()
             elif self.twoMicIndex == True:
                 if(self.boat.m1.sel >= self.boat.max_sel and self.boat.m2.sel >= self.boat.max_sel):
+                    print("====twoMicIndex===")
                     self.boat.m1.rt = 0
                     m1_data = self.boat.m1.receiveData.copy()**2
                     m2_data = self.boat.m2.receiveData.copy()**2

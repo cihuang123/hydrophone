@@ -1,13 +1,12 @@
 #!/usr/bin/env python 
 import numpy as np 
 import math 
-from sympy import *
 import time
 import rospy 
-from scipy import signal as sg
 from robotx_msgs.msg import HydrophoneData
+from std_msgs.msg import Float64
 from numpy.fft import irfft, rfft 
-from doa_estimation.srv import *
+from hydrophone.srv import *
 import boatStatus
 
 class TDOA(object):
@@ -47,7 +46,7 @@ class TDOA(object):
         self.m2 = boatStatus.micPosition(int(self.window))
 
         #Iterate Function
-        rospy.Timer(rospy.Duration(self.ticks), self.Iterate)
+        rospy.Timer(rospy.Duration(self.ticks), self.serviceCallback)
 
         #Publisher
         self.pub_xxx = rospy.Publisher("Angle", Float64, queue_size=1)

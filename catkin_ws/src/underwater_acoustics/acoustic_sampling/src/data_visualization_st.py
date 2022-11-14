@@ -67,6 +67,11 @@ class Plot2D():
         ch3 = [float(i)/2147483648 for i in msg.data_ch3]
         ch4 = [float(i)/2147483648 for i in msg.data_ch4]
 
+        print('Mic1 get.')
+        print(np.nonzero(ch1))
+        print('Mic2 get.')
+        print(np.nonzero(ch1))
+
         self.ch1_data = ch1 + self.ch1_data_old
         self.ch2_data = ch2 + self.ch2_data_old
         self.ch3_data = ch3 + self.ch3_data_old
