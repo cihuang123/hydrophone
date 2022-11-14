@@ -44,7 +44,7 @@ class TDOA(object):
         rospy.Timer(rospy.Duration(self.ticks), self.Iterate)
         
         #Publisher
-        self.pub_xxx = rospy.Publisher("Angle", Float64, queue_size=1)
+        self.channel_pub = rospy.Publisher("Sound_dir", Float64, queue_size=1)
 
         #Subscriber
         self.sub_data = rospy.Subscriber("hydrophone_data", HydrophoneData, self.receiveMicData, queue_size=1)
@@ -126,6 +126,9 @@ class TDOA(object):
                     m2_data = self.boat.m2.receiveData.copy()**2
                     self.boat.m2.rt = self.corrXT(m1_data, m2_data, self.boat.m1_m2_dl)
                     self.boat.guessAngle = self.Mic2Angle(self.boat.m1.rt, self.boat.m2.rt)
+                    direction = self.boat.guessAngle 
+                    print('Direction: ',  direction)
+                    self.channel_pub.publish(direction)
                     self.index_tdoa = 2
                     self.waitForWindowFullStart = time.time()
 

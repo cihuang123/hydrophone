@@ -7,12 +7,12 @@
     <arg name="yaml_file" default="tdoa_params"/>
 
     <!-- Acoustic sampling node -->
-    <!-- <node name="acoustic_sampling_node" pkg="acoustic_sampling" type="acoustic_sampling_node" output="screen" clear_params="true" required="true">
+    <node name="acoustic_sampling_node" pkg="acoustic_sampling" type="acoustic_sampling_node" output="screen" clear_params="true" required="true">
         <rosparam command="load" file="$(find acoustic_sampling)/config/$(arg device).yaml" />
         <param name="pcm_id" type="str" value="$(arg pcm_id)" />
-    </node> -->
+    </node>
 
-    <node name="tdoa_3mic" pkg="doa_estimation" type="tdoa_2mic_robotx.py" output="screen" clear_params="true" required="true">
+    <node name="tdoa_3mic" pkg="doa_estimation" type="tdoa_3mic.py" output="screen" clear_params="true" required="true">
         <rosparam command="load" file="$(find doa_estimation)/config/$(arg yaml_file).yaml" />
     </node>
 

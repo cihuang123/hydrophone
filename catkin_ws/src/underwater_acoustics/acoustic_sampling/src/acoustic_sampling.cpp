@@ -67,7 +67,6 @@ RecorderNode::RecorderNode() {
     if (!ros::param::get("~DEVICE_NAME", DEVICE_NAME_))
         DEVICE_NAME_ = string("Focusrite 18i8 2nd");
     if (!ros::param::get("~pcm_id", pcm_id_)){
-        // pcm_id_ = string("hw:0,0");
         ROS_ERROR(PCM_ERR_MSG.c_str());
         ros::shutdown();
     }
@@ -96,6 +95,7 @@ RecorderNode::RecorderNode() {
     sound_msg_.data_ch2.clear();
     sound_msg_.data_ch3.clear();
     sound_msg_.data_ch4.clear();
+    
 
     // Set the parameter of recorder and check if the command succeeded
     bool enable_recorder = setRecorderParams();
@@ -188,7 +188,10 @@ void RecorderNode::capture(void) {
                     pcm_period_buffer_[i+3+j*4] << 24;
             switch(j){
                 case 0:
-                    sound_msg_.data_ch1.push_back(sum); break;
+                    sound_msg_.data_ch1.push_back(sum);  
+                    // cout << sound_msg_.data_ch1.size() << endl;
+                    // cout << sound_msg_.data_ch1[0] << endl;  
+                    break;
                 case 1:
                     sound_msg_.data_ch2.push_back(sum); break;
                 case 2:
