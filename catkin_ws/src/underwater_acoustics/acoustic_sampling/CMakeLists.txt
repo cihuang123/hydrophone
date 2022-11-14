@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(acoustic_sampling)
+cmake_minimum_required(VERSION 3.0.2)
+project(hydrophone)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -71,7 +72,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   robotx_msgs#   std_msgs
+#   std_msgs
 # )
 
 ################################################
@@ -105,8 +106,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES acoustic_sampling
-#  CATKIN_DEPENDS robotx_msgs roscpp rospy std_msgs std_srvs
+#  LIBRARIES hydrophone
+#  CATKIN_DEPENDS roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 
@@ -123,7 +124,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/acoustic_sampling.cpp
+#   src/${PROJECT_NAME}/hydrophone.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -134,7 +135,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/acoustic_sampling_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/hydrophone_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -154,12 +155,10 @@ include_directories(
 add_executable(acoustic_sampling_node src/acoustic_sampling.cpp)
 target_link_libraries(acoustic_sampling_node ${catkin_LIBRARIES})
 
-find_package(
-  ALSA REQUIRED
-)
-if (ALSA_FOUND)                                                
-    include_directories(${ALSA_INCLUDE_DIRS})      
-    target_link_libraries (acoustic_sampling_node ${ALSA_LIBRARIES})          
+find_package(ALSA REQUIRED)
+if (ALSA_FOUND)                  
+    include_directories(${ALSA_INCLUDE_DIRS})
+    target_link_libraries (acoustic_sampling_node ${ALSA_LIBRARIES})
 endif(ALSA_FOUND)
 
 #############
@@ -171,7 +170,7 @@ endif(ALSA_FOUND)
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
+# catkin_install_python(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
@@ -209,7 +208,7 @@ endif(ALSA_FOUND)
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_acoustic_sampling.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_hydrophone.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
